@@ -1,0 +1,15 @@
+{
+  "name": "migrations/parser",
+  "description": "parser database dumbs to migrations",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "pavel",
+      "email": "antonov.pavel.00@yandex.ru"
+    }
+  ],
+  "require": {
+    "php": "^7.3|^8.0"
+  }
+}
