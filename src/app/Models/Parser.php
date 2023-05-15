@@ -2,6 +2,8 @@
 
 namespace Migrations\Parser\App\Models;
 
+use Migrations\Parser\App\PARSER\Enums\TypeParserEnums;
+
 class Parser
 {
 
@@ -23,17 +25,10 @@ class Parser
 
     public static function parse(string $type = 'file'): object
     {
-        switch (mb_strtolower($type)) {
-            case "file":
-                $parser = new ParserFile();
-                break;
-            case "directory":
-                $parser = new ParserDirectory();
-                break;
-            default:
-                $parser = new ParserFile();
-        }
-
-        return $parser;
+        return match (mb_strtolower($type)) {
+            TypeParserEnums::FILE->value => new ParserFile(),
+            TypeParserEnums::DIRECTORY->value => new ParserDirectory(),
+            default => new ParserFile(),
+        };
     }
 }

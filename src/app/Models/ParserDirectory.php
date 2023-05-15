@@ -6,9 +6,9 @@ use Migrations\Parser\App\Abstracts\ParserAbstract;
 
 final class ParserDirectory extends ParserAbstract
 {
-    final public function createMigrations(string $source): int
+    final public function getListMigrations(string $source): array
     {
-        return 0;
+        return [];
     }
 
     final public function getTableList(string $source): string

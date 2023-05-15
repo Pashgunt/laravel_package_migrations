@@ -20,7 +20,7 @@ class MigrationParserServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $parser = Parser::parse()->getTableList(__DIR__."/../resources/dump/laravel.sql");
-        dd($parser);
+        $parser = Parser::parse()->getListMigrations(__DIR__."/../resources/dump/laravel.sql");
+        // dd($parser);
     }
 }
