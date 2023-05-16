@@ -4,11 +4,14 @@ namespace Migrations\Parser\App\PARSER\Services;
 
 use Closure;
 use Generator;
+use Migrations\Parser\App\PARSER\Contracts\MementoInterface;
+use Migrations\Parser\App\PARSER\Contracts\ProcessPiplineInterface;
 
-// TODO make precess file dependence at memory, perfomance and size 
-class ProcessFile
+class ProcessFile extends RulesDump implements ProcessPiplineInterface
 {
     protected Generator $fileHandler;
+
+    private string $state = '';
 
     public function __construct(string $source)
     {
@@ -17,9 +20,34 @@ class ProcessFile
 
     public function process($data, Closure $next): array
     {
+        $caretakerProcess = CaretakerProcessFile::getInstance($this);
+        $createList = [];
+        $createStructure = "";
+        $isAdd = false;
         foreach ($this->fileHandler as $fileRaw) {
-            dd($fileRaw);
+            if ($this->checkCreateStart($fileRaw)) {
+                $isAdd = true;
+            }
+            if ($isAdd) {
+                $createStructure .= "\n $fileRaw";
+            }
+            if ($this->checkCreateEnd($fileRaw) && $isAdd) {
+                $createList[] = trim($createStructure);
+                $this->state = $createStructure;
+                $caretakerProcess->backup();
+                $createStructure = "";
+                $isAdd = false;
+            }
         }
-        return $next($data);
+        return $next($createList);
+    }
+
+    public function save(): MementoInterface
+    {
+        return new MementoProcessFile($this->state);
+    }
+    public function restore(MementoProcessFile $mementoProcess): void
+    {
+        $this->state = $mementoProcess->getState();
     }
 }
