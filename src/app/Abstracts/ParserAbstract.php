@@ -4,6 +4,7 @@ namespace Migrations\Parser\App\Abstracts;
 
 use Migrations\Parser\App\PARSER\Enums\TypeParserEnums;
 use Migrations\Parser\App\PARSER\Services\ProcessFile;
+use Migrations\Parser\App\PARSER\Services\StructureTable;
 
 abstract class ParserAbstract
 {
@@ -15,7 +16,8 @@ abstract class ParserAbstract
     {
         return match (mb_strtolower($typeOfParser)) {
             TypeParserEnums::FILE->value => [
-                new ProcessFile($source)
+                new ProcessFile($source),
+                StructureTable::class
             ],
             TypeParserEnums::DIRECTORY->value => [],
             default => []

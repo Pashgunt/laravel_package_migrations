@@ -11,16 +11,17 @@ class ProcessFile extends RulesDump implements ProcessPiplineInterface
 {
     protected Generator $fileHandler;
 
-    private string $state = '';
+    private array $state = [];
+    private CaretakerProcessFile $caretakerProcess;
 
     public function __construct(string $source)
     {
         $this->fileHandler = (ReadFile::getInstance())->readTheFileAsync($source);
+        $this->caretakerProcess = CaretakerProcessFile::getInstance($this);
     }
 
-    public function process($data, Closure $next): array
+    public function process(array $data, Closure $next): array
     {
-        $caretakerProcess = CaretakerProcessFile::getInstance($this);
         $createList = [];
         $createStructure = "";
         $isAdd = false;
@@ -33,8 +34,8 @@ class ProcessFile extends RulesDump implements ProcessPiplineInterface
             }
             if ($this->checkCreateEnd($fileRaw) && $isAdd) {
                 $createList[] = trim($createStructure);
-                $this->state = $createStructure;
-                $caretakerProcess->backup();
+                $this->state = $createList;
+                $this->caretakerProcess->backup();
                 $createStructure = "";
                 $isAdd = false;
             }

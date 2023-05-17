@@ -3,6 +3,7 @@
 namespace Migrations\Parser\App\PARSER\Services;
 
 use Migrations\Parser\App\PARSER\Contracts\RulesInterface;
+use Migrations\Parser\App\PARSER\Enums\MigrationMethodsPrepare;
 
 class RulesDump implements RulesInterface
 {
@@ -14,24 +15,29 @@ class RulesDump implements RulesInterface
     {
         return !!preg_match('/(?<=(\s|.|\)))(ENGINE|CHARSET|COLLATE).+;/', $raw);
     }
-    public function checkDropStart(string $raw): bool
+
+    public function getTabeNames(string $createDataRaw): array
     {
-        return true;
+        preg_match('/(?<=(CREATE\sTABLE\s`))[a-zA-Z_-]+(?=`)/', $createDataRaw, $matches);
+        return $matches ?? [];
     }
-    public function checkDropEnd(string $raw): bool
+
+    public function getColumnNames(string $createDataRaw): array
     {
-        return true;
+        preg_match_all('/(?<!(CREATE\sTABLE\s`))(?<=`)([a-zA-Z_-]+)(?=`)/', $createDataRaw, $matches);
+        return $matches ?? [];
     }
-    public function checkInsertStart(string $raw): bool
+
+    public function getColumnType(string $createDataRaw): array
     {
-        return true;
+        preg_match_all('/(?<=`)(?<=[a-zA-Z+]`)(\s+[a-zA-Z]+\(\d+\)|\s+[a-zA-Z]+)/', $createDataRaw, $matches);
+        return $matches ?? [];
     }
-    public function checkInsertEnd(string $raw): bool
+
+    public function getColumnLength(string $columnType): int
     {
-        return true;
-    }
-    public function checkComment(string $raw): bool
-    {
-        return true;
+        preg_match('/\d+/', $columnType, $length);
+
+        return (int)current($length);
     }
 }

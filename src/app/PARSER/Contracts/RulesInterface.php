@@ -6,9 +6,8 @@ interface RulesInterface
 {
     public function checkCreateStart(string $raw): bool;
     public function checkCreateEnd(string $raw): bool;
-    public function checkDropStart(string $raw): bool;
-    public function checkDropEnd(string $raw): bool;
-    public function checkInsertStart(string $raw): bool;
-    public function checkInsertEnd(string $raw): bool;
-    public function checkComment(string $raw): bool;
+    public function getTabeNames(string $createDataRaw): array;
+    public function getColumnNames(string $createDataRaw): array;
+    public function getColumnType(string $createDataRaw): array;
+    public function getColumnLength(string $columnType): int;
 }

@@ -6,16 +6,16 @@ use Migrations\Parser\App\PARSER\Contracts\MementoInterface;
 
 class MementoProcessFile implements MementoInterface
 {
-    private string $state;
+    private array $state;
     private string $date;
 
-    public function __construct(string $state)
+    public function __construct(array $state)
     {
         $this->state = $state;
         $this->date = date('Y-m-d H:i:s');
     }
 
-    public function getState(): string
+    public function getState(): array
     {
         return $this->state;
     }
