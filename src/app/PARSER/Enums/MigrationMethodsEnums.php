@@ -16,6 +16,6 @@ class  MigrationMethodsEnums
         'text' => 'text',
         'longtext' => 'longText',
         'mediumtext' => 'mediumText',
-        'int' => 'integer,'
+        'int' => 'integer',
     ];
 }

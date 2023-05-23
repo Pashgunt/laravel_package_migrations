@@ -36,23 +36,28 @@ class StructureTable extends RulesDump implements ProcessPiplineInterface
                     'original' => $columns[$index]
                 ];
             } else {
-                if (mb_strpos($type, '(')) {
-                    $result[] = [
-                        'method' => MigrationMethodsEnums::METHODS[trim(strtolower(current(explode('(', $type))))],
-                        'length' => $this->getColumnLength($type),
-                        'original' => $type
-                    ];
-                } else {
-                    $result[] = [
-                        'method' => MigrationMethodsEnums::METHODS[trim(strtolower($type))],
-                        'length' => null,
-                        'original' => $type
-                    ];
-                }
+                $result[] = $this->prepareTypeForMethod($type);
             }
         }
 
         return $result;
+    }
+
+    public function prepareTypeForMethod(string $type): array
+    {
+        $coumnLengthValue = (int)$this->getColumnLength($type);
+        if ($coumnLengthValue) {
+            return [
+                'method' => MigrationMethodsEnums::METHODS[trim(strtolower(current(explode('(', $type))))],
+                'length' => $coumnLengthValue,
+                'original' => $type
+            ];
+        }
+        return [
+            'method' => MigrationMethodsEnums::METHODS[trim(strtolower($type))],
+            'length' => null,
+            'original' => $type
+        ];
     }
 
     public function save(): MementoInterface
