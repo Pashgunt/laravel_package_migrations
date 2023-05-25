@@ -1,0 +1,36 @@
+{
+    "status": "failure",
+    "failures": {
+        "/Users/pavel/Documents/projects/laravel-package-migration/packages/migrations/parser/src/database/migrations/2023_05_25_200228_create_active_account_for_user_table.php": {
+            "absolute_file": "/Users/pavel/Documents/projects/laravel-package-migration/packages/migrations/parser/src/database/migrations/2023_05_25_200228_create_active_account_for_user_table.php",
+            "relative_file": "2023_05_25_200228_create_active_account_for_user_table.php",
+            "error": "unexpected namespaced name \"Illuminate\\Database\\Migrations...\" in line 3",
+            "line": 3
+        }
+    },
+    "time_usage": "< 1 sec",
+    "memory_usage": "4.0 MiB",
+    "cache_usage": "14 hits, 1 miss",
+    "files_count": 15,
+    "options_used": {
+        "path": [
+            "src/database/migrations"
+        ],
+        "configuration": ".phplint.yml",
+        "no-configuration": false,
+        "exclude": [],
+        "extensions": [
+            "php"
+        ],
+        "jobs": 5,
+        "no-cache": false,
+        "cache": ".phplint.cache",
+        "no-progress": false,
+        "progress": "printer",
+        "log-json": "text.txt",
+        "log-junit": false,
+        "warning": false,
+        "memory-limit": "128M",
+        "ignore-exit-code": false
+    }
+}

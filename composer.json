@@ -1,15 +1,13 @@
 {
-  "name": "migrations/parser",
-  "description": "parser database dumbs to migrations",
-  "minimum-stability": "stable",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "pavel",
-      "email": "antonov.pavel.00@yandex.ru"
-    }
-  ],
-  "require": {
-    "php": "^7.3|^8.0"
-  }
+    "name": "pavel/parser",
+    "require-dev": {
+        "overtrue/phplint": "^9.0",
+        "squizlabs/php_codesniffer": "^3.7"
+    },
+    "authors": [
+        {
+            "name": "pavel",
+            "email": "antonov.pavel.00@yandex.ru"
+        }
+    ]
 }
